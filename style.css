@@ -1,0 +1,140 @@
+
+:root {
+    --print-col-gauge: 0.7fr;
+    --print-col-status: 1.3fr;
+    --print-gauge-height: 126px;
+    --print-gauge-percent: 1.75rem;
+    --print-status-height: 220px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+}
+
+.chart-status { height: 240px; }
+
+.gauge-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 180px;
+}
+
+.gauge-text {
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page-table { width: 100%; border-collapse: collapse; }
+.page-table > thead > tr > td,
+.page-table > tbody > tr > td,
+.page-table > tfoot > tr > td { padding: 0; }
+.print-space-top, .print-space-bottom { display: none; }
+
+.break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+
+.print-mode {
+    width: 680px !important;
+    max-width: 680px !important;
+}
+.print-mode .row-two {
+    grid-template-columns: var(--print-col-gauge) var(--print-col-status) !important;
+}
+.print-mode .gauge-container { height: var(--print-gauge-height) !important; }
+.print-mode .chart-status { height: var(--print-status-height) !important; }
+.print-mode #progress-percentage {
+    font-size: var(--print-gauge-percent) !important;
+    line-height: 2rem !important;
+}
+
+.mode-btn {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    color: #64748B;
+    transition: all 0.15s;
+}
+.mode-btn:hover { color: #1E293B; }
+.mode-btn.active {
+    background: #ffffff;
+    color: #4338CA;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+
+.chart-snapshot { display: none; }
+
+@media print {
+    @page {
+        size: A4;
+        margin: 0; 
+    }
+    body {
+        background-color: white;
+        padding: 0 1.5cm !important; 
+        min-height: 0 !important;
+    }
+
+    
+    .gauge-text {top: 55% !important;}
+    .page-table > thead { display: table-header-group; }
+    .page-table > tfoot { display: table-footer-group; }
+    .print-space-top { display: block; height: 1cm; }
+    .print-space-bottom { display: block; height: 1cm; }
+
+    .print-hidden { display: none !important; }
+    .shadow-sm { box-shadow: none !important; border-color: #e2e8f0 !important; }
+    .bg-white { background-color: white !important; }
+
+    .row-two { grid-template-columns: var(--print-col-gauge) var(--print-col-status) !important; }
+    .gauge-container { height: var(--print-gauge-height) !important; }
+    .chart-status { height: var(--print-status-height) !important; }
+    .print-flex { display: flex !important; }
+    #progress-percentage {
+        font-size: var(--print-gauge-percent) !important;
+        line-height: 2rem !important;
+    }
+
+    .chart-container canvas,
+    .gauge-container canvas { display: none !important; }
+    .chart-snapshot {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    canvas {
+        max-width: 100% !important;
+    }
+}
